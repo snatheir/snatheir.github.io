@@ -19,6 +19,7 @@ function preload() {
 
 function setup() {
     createCanvas(600, 400);
+    console.log("hello world");
     image(course, 0, 0, width, height);
     radius = 15;
     ball_x = Math.random() * (width+2*radius) - 2*radius;
