@@ -9,7 +9,7 @@ let score = 0;
 const scoreEl = document.getElementById("scoreSpan");
 
 function preload() {
-    course = loadImage('assets/golf-course.jpg');
+    course = loadImage('assets/golf-course.jpg', () => console.log("success"),(event) => console.log("error") );
     golf_sound = loadSound('assets/golf.mp3'); 
     golf_ball = loadImage('assets/ball.png')
     club = loadImage('assets/club.png')
