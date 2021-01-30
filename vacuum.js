@@ -15,7 +15,9 @@ function preload() {
 
 function setup() {
 
-    createCanvas(600, 400);
+    const canvas = createCanvas(600, 400);
+    canvas.id("vacuum");
+
     image(floor, 0, 0, width, height);
 
     for (i=0; i<10; i++){
