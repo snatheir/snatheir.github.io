@@ -1,0 +1,53 @@
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 600px;
+    height: 400px;
+    border: solid black;
+}
+  
+.grid div {
+    width: 21px;
+    height: 22.3px;
+}
+
+.pac-dot {
+    background-color: green;   
+    border: 5px solid white;
+    box-sizing: border-box;
+}
+
+.wall {
+    background-color: black;
+}
+
+.power-pellet {
+    background-color: green;
+    border-radius: 10px;
+}
+
+.pac-man {
+    background: url(assets/Character_rpg-29.png);
+    background-size: 21.2px 20px;
+    width: 10px;
+    height: 20px;
+}
+
+.plant {
+    background: url(assets/ezgif.com-gif-maker.png);
+    background-size: 20px 20px;
+    width: 20px;
+    height: 20px;
+}
+
+.boxed {
+    border: 1px solid green ;
+    background-color: green;
+}
+
+.manWater {
+    background: url(assets/w2.png);
+    background-size: 21.2px 20px;
+    width: 10px;
+    height: 20px;
+}
