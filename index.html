@@ -1,106 +1,186 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="water.css">
-        <!-- CDNs -->
-        <script src="http://www.youtube.com/player_api"></script>
-        <script src=https://cdn.JsDelivr.net/npm/p5></script>
-        <script src=https://cdn.JsDelivr.net/npm/p5/lib/addons/p5.dom.min.js></script> -->
-        <script src=https://cdn.JsDelivr.net/npm/p5/lib/addons/p5.sound.min.js></script>
-        <style>
-            .modal {
-                display: none; /* Hidden by default */
-                position: absolute; /* Stay in place */
-                z-index: 1; /* Sit on top */
-                padding-top: 100px; /* Location of the box */
-                left: 0;
-                top: 0;
-                width: 610px; /* Full width */
-                height: 325px; /* Full height */
-                overflow: auto; /* Enable scroll if needed */
-                background-color: rgb(0,0,0); /* Fallback color */
-                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-            }
-            
-            /* Modal Content */
-            .modal-content {
-                background-color: #fefefe;
-                margin: auto;
-                padding: 20px;
-                border: 1px solid #888;
-                width: 25%;
-            }
-            
-            /* The Close Button */
-            .close {
-                color: #aaaaaa;
-                float: right;
-                font-size: 20px;
-                font-weight: bold;
-            }
-            
-            .close:hover,
-            .close:focus {
-                color: #000;
-                text-decoration: none;
-                cursor: pointer;
-            }
-          </style>
-    </head>
-    <body>
-        <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-        <div class="fixed text-white text-sm ml-2 mt-1 select-none" id="score">
-            <span>Score: </span><span id="scoreSpan">0</span>
+<html lang="en">
+<title>BELL LETS TALK</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<head>
+    <style>
+        iframe {
+            width: 672px;
+            height: 378px;
+            margin: 0 auto;
+            background-color: #777;
+            display: block;
+            border-style:none;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="w3-sidebar w3-bar-block w3-blue w3-animate-right w3-top w3-text-light-grey w3-large" style="z-index:3;width:250px;font-weight:bold;display:none;right:0;" id="mySidebar">
+        <a href="javascript:void()" onclick="w3_close()" class="w3-bar-item w3-button w3-center w3-padding-32">CLOSE</a> 
+        <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-center w3-padding-16">YOUTUBE</a> 
+        <a href="#milk" onclick="w3_close()" class="w3-bar-item w3-button w3-center w3-padding-16">MINIGAMES</a> 
+        <a href="#team" onclick="w3_close()" class="w3-bar-item w3-button w3-center w3-padding-16">OUR TEAM</a>
+      </nav>
+
+    <!-- Header -->
+    <header class="w3-display-container w3-content w3-center" style="max-width:1500px">
+        <div class="w3-container w3-top w3-blue w3-xlarge w3-padding-8">
+            <span class="w3-left w3-padding">B&EacuteLL L&EacuteT'S TALK</span>
+            <a href="javascript:void(0)" class="w3-right w3-button w3-blue" onclick="w3_open()">☰</a>
         </div>
-    
-        <div id="player"></div>
 
-
-        <button id = "btn1" type="button" onclick="seek(0)">Water Plant</button>
-        <button id = "btn2"  type="button" onclick="seek(1)">(Not) Working Out</button>
-        <button id = "btn3"  type="button" onclick="seek(2)">(Forgot) Milk</button>
-        <button id = "btn4"  type="button" onclick="seek(3)">Vacuum</button>
-        <button id = "btn5"  type="button" onclick="seek(4)">Golf</button>
-        <button id = "btn6"  type="button" onclick="seek(5)">Hockey</button>
-        <button id = "btn7"  type="button" onclick="seek(6)">BellLetsTalk</button>
+        <div class="w3-text-grey">
+            <h3>.</h3>
+            <h4>Now more than ever! <b>Bell Let's Talk Day</b> sets new records <br> Canadians take action for mental health with <b>159,173,435</b> messages of support.</h4>
+            <h5 class="w3-text-blue">Join Us & Bell in <b>Supporting Mental Health</b> with Michael Bubl&eacute!</h5>
+        </div>
+        <div class="w3-container w3-padding-top-16">
+            <iframe src="https://www.youtube.com/embed/VUY-rizctHA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
         
-        <div class="grid" id="grid"></div>
-        
-        <div id="myModal" class="modal">
-            <!-- Modal content -->
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <h3> Shopping List </h3>
-                <p> &#9633  &nbsp  &nbsp Eggs </p>
-                <p> &#9633  &nbsp  &nbsp Grapes </p>
-                <p> &#9633  &nbsp  &nbsp Milk...?</p>
+        <div class="w3-display-container w3-content w3-center" style="width:2000px">
+            <div class="w3-bar w3-light-grey w3-round">
+                <a href="#milk" class="w3-bar-item w3-button">Milk</a>
+                <a href="#golf" class="w3-bar-item w3-button">Golf</a>
+                <a href="#hockey" class="w3-bar-item w3-button">Hockey</a>
+                <a href="#vacuum" class="w3-bar-item w3-button">Vacuum</a>
+                <a href="#water" class="w3-bar-item w3-button">Water</a>
+                <a href="#chips" class="w3-bar-item w3-button">Chips</a>
             </div>
         </div>
-        <script>
-            // Get the modal
-            var modal = document.getElementById("myModal");
-            
-            // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close")[0];
-            
-            modal.style.display = "block";
-            
-            // When the user clicks on <span> (x), close the modal
-            span.onclick = function() {
-              modal.style.display = "none";
-            }
-            
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
-              if (event.target == modal) {
-                modal.style.display = "none";
-              }
-            }
-        </script>
-        <script src="index.js"></script>
-        <!-- <script src="golf.js"></script> -->
+    </header>
 
-    </body>
+    <img src="assets/bellletstalkjpg.jpg" class="w3-image w3-greyscale-min" style="width:100%">
+
+
+    <div class="w3-row w3-padding-64 w3-light-grey" id="milk">
+        <div class="w3-col m6 w3-padding-large w3-hide-small" style= "z-index: -1">
+            <iframe frameborder="0" src="https://itch.io/embed-upload/3284894?color=F0F0F0" allowfullscreen="" width="600" height="420"><a href="https://daimoths.itch.io/milk">Play Milk on itch.io</a></iframe>
+        </div>
+
+        <div class="w3-col m6 w3-padding-large" style="z-index:1">
+            <br>
+        <h1 class="w3-center">Milk</h1>
+        <h5 class="w3-center">"Watching me forget the milk..."<h5><br>
+        <p class="w3-large w3-center"> &nbsp &nbsp &nbsp &nbsp &nbsp This minigame is based on a significant moment in Buble's journey <br> &nbsp &nbsp &nbsp &nbsp &nbsp to supporting mental health.</p>
+        <p class="w3-large w3-text-grey w3-center"> &nbsp &nbsp &nbsp &nbsp &nbsp To find out more about how to support mental health, visit <br> &nbsp &nbsp &nbsp &nbsp &nbsp the Lets Talk website!</p>
+        </div>
+    </div>
+
+    <div class="w3-row w3-padding-64" id="golf">
+        <div class="w3-col m6 w3-padding-large">
+            <br>
+            <h1 class="w3-center">Golf</h1>
+            <h5 class="w3-center">"Watching me something about golf... </h5><br>
+            <p class="w3-large w3-center"> &nbsp &nbsp &nbsp &nbsp &nbsp This minigame is based on a significant moment in Buble's journey to supporting mental health.</p>
+            <p class="w3-large w3-text-grey w3-center"> &nbsp &nbsp &nbsp &nbsp &nbsp To find out more about how to support mental health, visit the Lets Talk website!</p>
+        </div>
+
+        <div class="w3-col m6 w3-padding-large w3-hide-small">
+            <iframe frameborder="0" src="https://itch.io/embed-upload/3285040?color=ffffff" allowfullscreen="" width="600" height="420"><a href="https://daimoths.itch.io/milk">Play Milk on itch.io</a></iframe>
+        </div>
+    </div>
+
+    <div class="w3-row w3-padding-64 w3-light-grey" id="hockey">
+        <div class="w3-col m6 w3-padding-large w3-hide-small" style= "z-index: -1">
+            <iframe frameborder="0" src="https://itch.io/embed-upload/3285012?color=F0F0F0" allowfullscreen="" width="600" height="420"><a href="https://daimoths.itch.io/milk">Play Milk on itch.io</a></iframe>
+        </div>
+
+        <div class="w3-col m6 w3-padding-large" style="z-index:1">
+            <br>
+        <h1 class="w3-center">Hockey</h1>
+        <h5 class="w3-center">"Watching me hockey doo dah..."<h5><br>
+        <p class="w3-large w3-center"> &nbsp &nbsp &nbsp &nbsp &nbsp This minigame is based on a significant moment in Buble's journey <br> &nbsp &nbsp &nbsp &nbsp &nbsp to supporting mental health.</p>
+        <p class="w3-large w3-text-grey w3-center"> &nbsp &nbsp &nbsp &nbsp &nbsp To find out more about how to support mental health, visit <br> &nbsp &nbsp &nbsp &nbsp &nbsp the Lets Talk website!</p>
+        </div>
+    </div>
+
+    <div class="w3-row w3-padding-64" id="vacuum">
+        <div class="w3-col m6 w3-padding-large">
+            <br>
+            <h1 class="w3-center">Vacuum</h1>
+            <h5 class="w3-center">"Watching me vroom vroom... </h5><br>
+            <p class="w3-large w3-center"> &nbsp &nbsp &nbsp &nbsp &nbsp This minigame is based on a significant moment in Buble's journey to supporting mental health.</p>
+            <p class="w3-large w3-text-grey w3-center"> &nbsp &nbsp &nbsp &nbsp &nbsp To find out more about how to support mental health, visit the Lets Talk website!</p>
+        </div>
+
+        <div class="w3-col m6 w3-padding-large w3-hide-small">
+            <iframe frameborder="0" src="https://itch.io/embed-upload/3285051?color=ffffff" allowfullscreen="" width="600" height="420"><a href="https://daimoths.itch.io/milk">Play Milk on itch.io</a></iframe>
+        </div>
+    </div>
+
+    <div class="w3-row w3-padding-64 w3-light-grey" id="water">
+        <div class="w3-col m6 w3-padding-large w3-hide-small" style= "z-index: -1">
+            <iframe frameborder="0" src="https://itch.io/embed-upload/3285071?color=F0F0F0" allowfullscreen="" width="600" height="420"><a href="https://daimoths.itch.io/milk">Play Milk on itch.io</a></iframe>
+        </div>
+
+        <div class="w3-col m6 w3-padding-large" style="z-index:1">
+            <br>
+        <h1 class="w3-center">Water</h1>
+        <h5 class="w3-center">"Watching me water the plants..."<h5><br>
+        <p class="w3-large w3-center"> &nbsp &nbsp &nbsp &nbsp &nbsp This minigame is based on a significant moment in Buble's journey <br> &nbsp &nbsp &nbsp &nbsp &nbsp to supporting mental health.</p>
+        <p class="w3-large w3-text-grey w3-center"> &nbsp &nbsp &nbsp &nbsp &nbsp To find out more about how to support mental health, visit <br> &nbsp &nbsp &nbsp &nbsp &nbsp the Lets Talk website!</p>
+        </div>
+    </div>
+
+    <div class="w3-row w3-padding-64" id="chips">
+        <div class="w3-col m6 w3-padding-large">
+            <br>
+            <h1 class="w3-center">Chips</h1>
+            <h5 class="w3-center">"Watching me not work out... </h5><br>
+            <p class="w3-large w3-center"> &nbsp &nbsp &nbsp &nbsp &nbsp This minigame is based on a significant moment in Buble's journey to supporting mental health.</p>
+            <p class="w3-large w3-text-grey w3-center"> &nbsp &nbsp &nbsp &nbsp &nbsp To find out more about how to support mental health, visit the Lets Talk website!</p>
+        </div>
+
+        <div class="w3-col m6 w3-padding-large w3-hide-small">
+            <iframe frameborder="0" src="https://itch.io/embed-upload/3285088?color=ffffff" allowfullscreen="" width="600" height="420"><a href="https://daimoths.itch.io/milk">Play Milk on itch.io</a></iframe>
+        </div>
+    </div>
+
+    <div class="w3-container w3-padding-64 w3-center w3-light-grey" id="team">
+    <h2>OUR TEAM</h2>    
+    <div class="w3-row"><br>
+    
+    <div class="w3-quarter">
+      <img src="/team/merna.jpg" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
+      <h3>Merna Alghannam</h3>
+      <p>change later</p>
+    </div>
+    
+    <div class="w3-quarter">
+      <img src="/team/rania.jpg" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
+      <h3>Rania Hakimi</h3>
+      <p>change later</p>
+    </div>
+    
+    <div class="w3-quarter">
+      <img src="/team/dima.jpg" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
+      <h3>Dima Ismail</h3>
+      <p>change later</p>
+    </div>
+    
+    <div class="w3-quarter">
+      <img src="/team/sharif.jpg" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
+      <h3>Sharif Natheir</h3>
+      <p>change later</p>
+    </div>
+    
+
+    <script>
+        // Script to open and close sidebar
+        function w3_open() {
+          document.getElementById("mySidebar").style.display = "block";
+          document.getElementById("myOverlay").style.display = "block";
+        }
+        
+        function w3_close() {
+          document.getElementById("mySidebar").style.display = "none";
+          document.getElementById("myOverlay").style.display = "none";
+        }
+    </script>        
+
+</body>
 </html>

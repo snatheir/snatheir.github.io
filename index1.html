@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="water.css">
+        <link rel="stylesheet" href="style.css">
+        <!-- CDNs -->
+        <script src="http://www.youtube.com/player_api"></script>
+        <script src=https://cdn.JsDelivr.net/npm/p5></script>
+        <script src=https://cdn.JsDelivr.net/npm/p5/lib/addons/p5.dom.min.js></script> -->
+        <script src=https://cdn.JsDelivr.net/npm/p5/lib/addons/p5.sound.min.js></script>
+    </head>
+    <body>
+        <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+        <div class="fixed text-white text-sm ml-2 mt-1 select-none" id="score">
+            <span>Score: </span><span id="scoreSpan">0</span>
+        </div>
+    
+        <div id="player"></div>
+
+
+        <A HREF="done/water.html"><button id = "btn1" type="button" onclick="seek(0)">Water Plant</button></A>
+        
+        <button id = "btn2"  type="button" onclick="seek(1)">(Not) Working Out</button>
+
+        <A HREF="milk.html"><button id = "btn3"  type="button" onclick="seek(2)">(Forgot) Milk</button></A>
+
+        <A HREF="done/vacuum.html"><button id = "btn4"  type="button" onclick="seek(3)">Vacuum</button></A>
+
+        <A HREF="golf.html"><button id = "btn5"  type="button" onclick="seek(4)">Golf</button></A>
+
+        <A HREF="done/hockey.html"><button id = "btn6"  type="button" onclick="seek(5)">Hockey</button></A>
+
+        <button id = "btn7"  type="button" onclick="seek(6)">BellLetsTalk</button>
+        
+        <div class="grid" id="grid"></div>
+        
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3> Shopping List </h3>
+                <p> &#9633  &nbsp  &nbsp Eggs </p>
+                <p> &#9633  &nbsp  &nbsp Grapes </p>
+                <p> &#9633  &nbsp  &nbsp Milk...?</p>
+            </div>
+        </div>
+        <script src="index.js"></script>
+        <!-- <script src="golf.js"></script> -->
+
+    </body>
+</html>
