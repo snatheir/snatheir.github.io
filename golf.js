@@ -4,10 +4,12 @@ let golf = function(sketch) {
     let score = 0;
     const scoreEl = document.getElementById("scoreSpan");
     let particles = []
+    let course;
+    let ball;
     
     sketch.preload = () => {
-        course = sketch.loadImage('assets/golf-course.jpg', () => console.log("success"),(event) => console.log("error") );
-        golf_sound = sketch.loadSound('assets/golf.mp3'); 
+        course = sketch.loadImage('assets/golf-course.jpg');
+        // golf_sound = sketch.loadSound('assets/golf.mp3'); 
         golf_ball = sketch.loadImage('assets/ball.png')
         club = sketch.loadImage('assets/club.png')
         flag = sketch.loadImage('assets/flag.png')
@@ -17,7 +19,6 @@ let golf = function(sketch) {
     sketch.setup = () => {
         const canvas = sketch.createCanvas(600, 400);
         canvas.id("golf");
-        console.log("hello world");
         sketch.image(course, 0, 0, sketch.width, sketch.height);
         radius = 15;
         ball_x = Math.random() * (sketch.width+2*radius) - 2*radius;
@@ -46,9 +47,9 @@ let golf = function(sketch) {
             speedY = sketch.winMouseY - sketch.pwinMouseY;
             ball.velocity.x = speedX;
             ball.velocity.y = speedY;
-            if (!golf_sound.isPlaying()) {
-                golf_sound.play();
-            }
+            // if (!golf_sound.isPlaying()) {
+            //     golf_sound.play();
+            // }
         }
     
         //ball moves
@@ -75,7 +76,6 @@ let golf = function(sketch) {
                 )}
     
             score +=1;
-            console.log(score);
             // setup();
         }
     
@@ -151,8 +151,8 @@ let vacuum = (sketch) => {
     sketch.preload = () => {
         tube = sketch.loadImage('assets/tube.png');
         floor = sketch.loadImage('assets/floor.jpg')
-        turnOn = sketch.loadSound('assets/turn-on.mp3'); 
-        turnOff = sketch.loadSound('assets/turn-off.mp3');
+        // turnOn = sketch.loadSound('assets/turn-on.mp3'); 
+        // turnOff = sketch.loadSound('assets/turn-off.mp3');
         poop = sketch.loadImage('assets/poop.png')
     }
     
@@ -198,8 +198,8 @@ let vacuum = (sketch) => {
             })
             sketch.ellipse(sketch.mouseX, sketch.mouseY,120,120);
     
-            turnOn.play();
-            turnOff.stop();
+            // turnOn.play();
+            // turnOff.stop();
     
     
     
@@ -207,8 +207,8 @@ let vacuum = (sketch) => {
             sketch.fill(255);
             sketch.ellipse(sketch.mouseX, sketch.mouseY,120,120);
     
-            turnOff.play();
-            turnOn.stop();
+            // turnOff.play();
+            // turnOn.stop();
         }
     }
     
@@ -233,7 +233,321 @@ let vacuum = (sketch) => {
     enemies = []    
 }
 
+let hockey = (sketch) => {
+    let speedX;
+    let speedY;
+    let score = 0;
+    const scoreEl = document.getElementById("scoreSpan");
+    
+    sketch.preload = () => {
+        course = sketch.loadImage('assets/hockey.jpg', () => console.log("success"),(event) => console.log("error") );
+        puck = sketch.loadImage('assets/puck.png')
+        stick = sketch.loadImage('assets/hockeystick.png')
+        // flag = sketch.loadImage('assets/flag.png')
+    }
+    
+    
+    sketch.setup = () => {
+        const canvas = sketch.createCanvas(600, 400);
+        canvas.id("hockey");
+        sketch.image(course, 0, 0, sketch.width, sketch.height);
+        radius = 15;
+        ball_x = Math.random() * (sketch.width+2*radius) - 2*radius;
+        ball_y = sketch.height - 50;
+        radius = 15;
+        ball = new Puck(ball_x, ball_y, radius, {x: 0, y:0}, 0.97)
+        goal = new Goal(sketch.width/2 +10, sketch.height/2 - 170, 25)
+        scoreEl.innerHTML = score;
+    }
+    
+    
+    sketch.draw = () => {
+        //background
+        sketch.image(course, 0, 0, sketch.width, sketch.height);
+    
+        // hole
+        goal.update()
+    
+        // ball hit by club
+        const dist = Math.hypot(ball.x - sketch.mouseX, ball.y - sketch.mouseY)
+        if (dist < 20) {
+            speedX = sketch.winMouseX - sketch.pwinMouseX;
+            speedY = sketch.winMouseY - sketch.pwinMouseY;
+            ball.velocity.x = speedX;
+            ball.velocity.y = speedY;
+        }
+    
+        //ball moves
+        ball.velocity.x *=ball.friction;
+        ball.velocity.y *=ball.friction;
+        ball.update()
+    
+        //club
+        sketch.image(stick, sketch.mouseX-45, sketch.mouseY-85, 100, 100)
+    
+        // check if ball entered hole
+        const goal_center_x = goal.x;
+        const goal_center_y = goal.y;
+        const ball_center_x = ball.x + ball.radius;
+        const ball_center_y = ball.y + ball.radius;
+    
+        let gameover = false
+    
+    
+        const dist_to_goal = Math.hypot(goal_center_x - ball_center_x, goal_center_y - ball_center_y)
+        if (dist_to_goal <= (ball.radius)*2 && gameover === false){        
+            score =1;
+            gameover = true;
+            scoreEl.innerHTML= score;
+            // setup();
+        }
+    
+    
+    }
+    
+    
+    class Puck {
+        constructor(x, y, radius, velocity, friction) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.velocity = velocity;
+            this.friction = friction;
+        }
+        draw() {
+            sketch.image(puck,this.x,this.y,this.radius*2,this.radius*2);
+        }
+        update() {
+            this.draw()
+            this.x += this.velocity.x;
+            this.y += this.velocity.y;
+        }
+    }
+    
+    class Goal {
+        constructor(x, y, radius) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+        }
+        draw() {
+            sketch.fill(0);
+            sketch.ellipse(this.x, this.y, this.radius * 2, this.radius * 2)
+        }
+        update() {
+           // this.draw()
+        }
+    }
+}
+
+let popcorn = (sketch) => {
+    let gym;
+    let currentImage;
+    let current =0;
+    
+    
+    var img = new Array();
+    img[0] = new Image();
+    img[0].src = 'assets/ezgif.com-gif-maker (6).png';
+    
+    img[1] = new Image();
+    img[1].src = 'assets/ezgif.com-gif-maker (7).png';
+    
+    img[2] = new Image();
+    img[2].src = 'assets/ezgif.com-gif-maker (8).png';
+    
+    img[3] = new Image();
+    img[3].src = 'assets/ezgif.com-gif-maker (9).png';
+    
+    img[4] = new Image();
+    img[4].src = 'assets/ezgif.com-gif-maker (11).png';
+    
+    img[5] = new Image();
+    img[5].src = 'assets/ezgif.com-gif-maker (12).png';
+    
+    img[6] = new Image();
+    img[6].src = 'assets/ezgif.com-gif-maker (13).png';
+    
+    img[7] = new Image();
+    img[7].src = 'assets/ezgif.com-gif-maker (14).png';
+    
+    img[8] = new Image();
+    img[8].src = 'assets/ezgif.com-gif-maker (15).png';
+    
+    sketch.preload = () => {
+        gym = sketch.loadImage('assets/background.jpg');
+        chipsBag = sketch.loadImage('assets/chips.jpg');
+        eatingSound = sketch.loadSound('assets/chips.mp3');
+        currentImage = sketch.loadImage(img[0].src);
+        console.log("preloaded!")
+    }
+    
+    sketch.setup = () => {
+        canvas = sketch.createCanvas(600, 400);
+        canvas.id="popcorn";
+        console.log("setup!");
+    }
+    
+    sketch.draw = () => {
+        sketch.image(gym, 0, 0, sketch.width, sketch.height);
+        // sketch.image(gym, 50, 50, sketch.width, sketch.height); // show background image
+        sketch.image(currentImage,400,200,100,200); // show updated image
+    }
+    
+    sketch.mousePressed = () => {
+        eatingSound.play();
+        current+=1;
+        if(current < 9){
+        console.log("Change image");
+        currentImage = sketch.loadImage(img[current].src);
+        console.log(current);
+        }
+    
+    }    
+
+}
+
+
+
+
+
+
 
 
 let myp5_golf = new p5(golf);
 let myp5_vacuum = new p5(vacuum);
+let myp5_hockey = new p5(hockey);
+let myp5_popcorn = new p5(popcorn);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const width = 28
+    const grid = document.querySelector('.grid')
+
+    const layout = [
+        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+        1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
+        1,0,1,1,0,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
+        1,0,1,1,0,0,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0,1,
+        1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,0,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,
+        1,0,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,
+        1,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,
+        1,1,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,
+        1,1,1,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,1,1,1,1,
+        1,1,1,1,1,1,0,1,1,0,1,1,1,0,0,1,1,1,4,1,1,0,1,1,1,1,1,1,
+        1,1,1,1,1,1,0,1,1,0,1,2,2,2,2,2,2,1,0,1,1,0,1,1,1,1,1,1,
+        0,4,4,4,4,4,0,1,1,0,1,2,2,2,2,2,2,1,0,0,0,0,4,4,4,4,4,4,
+        1,1,1,1,1,1,0,1,1,0,1,2,2,2,2,2,2,1,0,1,1,0,1,1,1,1,1,1,
+        1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,
+        1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,
+        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    ]
+  
+    const squares = []
+  
+    //create your board
+    function createBoard() {
+      for (let i = 0; i < layout.length; i++) {
+        const square = document.createElement('div')
+        grid.appendChild(square)
+        squares.push(square)
+  
+        //add layout to the board
+        if (layout[i] === 1) {
+          squares[i].classList.add('wall')
+        }
+      }
+    }
+    createBoard()
+
+    function wait(ms){
+        var start = new Date().getTime();
+        var end = start;
+        while(end < start + ms) {
+          end = new Date().getTime();
+       }
+     }
+
+    //starting position of pac-man
+    //let pacmanCurrentIndex = 729
+    let pacmanCurrentIndex = 29
+    squares[pacmanCurrentIndex].classList.add('pac-man')
+
+    //move pac-man
+    function movePacman(e){
+
+        squares[pacmanCurrentIndex].classList.remove('pac-man')
+        squares[pacmanCurrentIndex].classList.remove('manWater')
+
+        switch(e.keyCode){
+            case 37:
+                if(pacmanCurrentIndex % width !== 0 && !squares[pacmanCurrentIndex -1].classList.contains('wall')) 
+                pacmanCurrentIndex -=1
+                break
+            case 38:
+                if(pacmanCurrentIndex - width >= 0 && !squares[pacmanCurrentIndex -width].classList.contains('wall')) 
+                pacmanCurrentIndex -=width
+                break
+            case 39:
+                if(pacmanCurrentIndex % width < width - 1 && !squares[pacmanCurrentIndex +1].classList.contains('wall')) 
+                pacmanCurrentIndex +=1
+                break;
+            case 40:
+                if(pacmanCurrentIndex + width < width * width && !squares[pacmanCurrentIndex +width].classList.contains('wall')) 
+                pacmanCurrentIndex +=width
+                break
+        }
+
+        squares[pacmanCurrentIndex].classList.add('pac-man')
+
+        var audio = new Audio("assets/Water_Ch.mp3")
+
+        if(pacmanCurrentIndex === 349){
+            squares[pacmanCurrentIndex].classList.add('manWater')
+            audio.play();
+
+        }
+    }
+    document.addEventListener('keyup', movePacman)
+
+    let plantIndex = 377
+
+    squares[plantIndex].classList.add('plant')
+    
+})
+
+
+
+
+
+
+
+
+
+
+// myp5_golf.style.display = "none"
+// const water_canvas = window.getElementById("grid")
+// water_canvas.canvas.style.display= "none";
+
+
+// const golf_canvas = window.getElementById("golf")
+// console.log(golf_canvas);
+
+// golf_canvas.canvas.style.display= "none";
+// golf.canvas.style.dsplay= "fixed";
