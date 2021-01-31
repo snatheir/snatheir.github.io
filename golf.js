@@ -389,8 +389,7 @@ let popcorn = (sketch) => {
     }
     
     sketch.draw = () => {
-        sketch.image(gym, 0, 0, sketch.width, sketch.height);
-        // sketch.image(gym, 50, 50, sketch.width, sketch.height); // show background image
+        sketch.image(gym, 0, 0, sketch.width, sketch.height); // show background image
         sketch.image(currentImage,400,200,100,200); // show updated image
     }
     
@@ -406,27 +405,6 @@ let popcorn = (sketch) => {
     }    
 
 }
-
-
-
-
-
-
-
-
-let myp5_golf = new p5(golf);
-let myp5_vacuum = new p5(vacuum);
-let myp5_hockey = new p5(hockey);
-let myp5_popcorn = new p5(popcorn);
-
-
-
-
-
-
-
-
-
 
 
 
@@ -533,11 +511,233 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 
+let milk = (sketch) => {
+        // suppl vars
+    let arm;
+    let shelf;
+
+    // grocery item vars
+    let milk;
+    let eggs;
+    let grapes;
+    let pasta;
+    let oreo;
+
+    // audio vars
+    let cash;
+    let wrong;
+    let grocery
+
+    // score element
+    let score = 0;
+    const scoreEl = document.getElementById("scoreSpan");
+
+    // grocery item counters
+    let milkCounter = 0;
+    let oreoCounter = 0;
+    let eggCounter = 0;
+    let grapesCounter = 0;
+    let pastaCounter = 0;
+
+    sketch.preload = () => {
+        //supple
+        arm = sketch.loadImage('assets/arm.png');
+        shelf = sketch.loadImage('assets/grocery.jpg');
+
+        //audio
+        grocery = sketch.loadSound('assets/grocery.mp3');
+        cash = sketch.loadSound('assets/cash.mp3');
+        wrong = sketch.loadSound('assets/buzzerWrong.mp3');
+
+        //grocery items
+        milk = sketch.loadImage('assets/milk.png');
+        eggs = sketch.loadImage('assets/eggs.png');
+        pasta = sketch.loadImage('assets/pasta.png');
+        grapes = sketch.loadImage('assets/grapes.png');
+        oreo = sketch.loadImage('assets/oreo.png');
+    }
+
+    sketch.setup = () => {
+        canvas = sketch.createCanvas(600, 400);
+        canvas.id("milk");
+        sketch.image(shelf, 0, 0, width, height);
+
+        // milk range 20 -> 220 ;; 300 -> 500 
+        const color = `hsl(${Math.random() * 360}, 50%, 50%)`;
+        enemies.push({"milk": new milkEnemy((Math.random()*200)+20, 75, 32, color)});
+        enemies.push({"eggs": new eggsEnemy((Math.random()*200)+300, 80, 30, color)});
+
+        // eggs range 40 -> 160 ;; 320 -> 450
+        enemies.push({"oreo": new oreoEnemy((Math.random()*120)+40, 165, 35, color)});
+        enemies.push({"pasta": new pastaEnemy((Math.random()*130)+320, 155, 40, color)});
+
+        // eggs range 40 -> 160 ;; 320 -> 450
+        enemies.push({"grapes": new grapesEnemy((Math.random()*120)+40, 250, 32, color)});
+        enemies.push({"milk": new milkEnemy((Math.random()*130)+320, 250, 32, color)});
+        
+        grocery.play();
+
+        // scoreEl.innerHTML = score;
+    }
+
+    sketch.draw = () => {
+        sketch.image(shelf, 0, 0, sketch.width, sketch.height);
+
+
+        // dirt
+        enemies.forEach( (enemy) => {
+            // console.log(Object.values(enemy)[0])
+            Object.values(enemy)[0].draw();
+        })
+        
+        // arm
+        sketch.image(arm, sketch.mouseX-30, sketch.mouseY-30, sketch.width, sketch.height);
+
+        // cha-ching when mouse pressed on grocery item
+        if (sketch.mouseIsPressed) {
+            sketch.fill(0);
+            enemies.forEach( (enemy, index) => {        
+                const dist = Math.hypot(Object.values(enemy)[0].x - sketch.mouseX, Object.values(enemy)[0].y - sketch.mouseY)
+                if (dist < 30) {
+                    enemies.splice(index, 1);
+                    console.log(Object.keys(enemy)[0]);
+                    if (Object.keys(enemy)[0] == 'milk'){
+                        milkCounter++;
+                        if (milkCounter == 1){
+                            score++;
+                        } else {
+                            score--;
+                        }
+                        cash.play();
+                    } else if (Object.keys(enemy)[0] == 'oreo'){
+                        oreoCounter++;
+                        score--;
+                        wrong.play();
+                    } else if (Object.keys(enemy)[0] == 'eggs'){
+                        eggCounter++;
+                        score++;
+                        cash.play();
+                    } else if (Object.keys(enemy)[0] == 'pasta'){
+                        pastaCounter++;
+                        score--;
+                        wrong.play();
+                    } else if (Object.keys(enemy)[0] == 'grapes'){
+                        grapesCounter++;
+                        score++;
+                        cash.play();
+                    }
+                    scoreEl.innerHTML= score;
+                }
+            })
+            // ellipse(mouseX,mouseY,120,120);
+        } else{
+            sketch.fill(255);
+            // ellipse(mouseX,mouseY,120,120);
+        }
+    }
+
+
+    class milkEnemy {
+        constructor(x, y, radius, color) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.color = color;
+        }
+        draw() {
+            // fillStyle = this.color;
+            sketch.fill(211);
+            // ellipse(this.x,this.y,2*this.radius,2*this.radius);
+            sketch.image(milk, this.x, this.y, 2*this.radius, 2*this.radius);
+
+        }
+        update() {
+            this.draw()
+        }
+    }
+
+    class eggsEnemy {
+        constructor(x, y, radius, color) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.color = color;
+        }
+        draw() {
+            // fillStyle = this.color;
+            sketch.fill(211);
+            // ellipse(this.x,this.y,2*this.radius,2*this.radius);
+            sketch.image(eggs, this.x, this.y, 3*this.radius, 2*this.radius);
+
+        }
+        update() {
+            this.draw()
+        }
+    }
+
+    class grapesEnemy {
+        constructor(x, y, radius, color) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.color = color;
+        }
+        draw() {
+            sketch.fill(211);
+            sketch.image(grapes, this.x, this.y, 3*this.radius, 2*this.radius);
+
+        }
+        update() {
+            this.draw()
+        }
+    }
+
+    class pastaEnemy {
+        constructor(x, y, radius, color) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.color = color;
+        }
+        draw() {
+            sketch.fill(211);
+            sketch.image(pasta, this.x, this.y, 3*this.radius, 2*this.radius);
+
+        }
+        update() {
+            this.draw()
+        }
+    }
+
+    class oreoEnemy {
+        constructor(x, y, radius, color) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.color = color;
+        }
+        draw() {
+            sketch.fill(211);
+            sketch.image(oreo, this.x, this.y, 2*this.radius, 2*this.radius);
+
+        }
+        update() {
+            this.draw()
+        }
+    }
+
+    enemies = []
+
+}
 
 
 
 
-
+let myp5_golf = new p5(golf);
+let myp5_vacuum = new p5(vacuum);
+let myp5_hockey = new p5(hockey);
+let myp5_popcorn = new p5(popcorn);
+let myp5_milk = new p5(milk);
 
 
 

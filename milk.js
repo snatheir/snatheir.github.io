@@ -1,7 +1,6 @@
 // suppl vars
 let arm;
 let shelf;
-let list;
 
 // grocery item vars
 let milk;
@@ -30,7 +29,6 @@ function preload() {
     //supple
     arm = loadImage('assets/arm.png');
     shelf = loadImage('assets/grocery.jpg');
-    list = loadImage('assets/List.png');
 
     //audio
     grocery = loadSound('assets/grocery.mp3');
